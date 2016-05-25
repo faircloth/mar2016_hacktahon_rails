@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-  # before_action :set_topic, only: [:show, :destroy]
+  before_action :set_note, only: [:show, :destroy]
 
   def index
     render json: Note.all.to_json
@@ -10,27 +10,22 @@ class NotesController < ApplicationController
   # end
 
 
-  # def new
-  #   @topic = Topic.new
-  # end
+  def new
+    @note = Note.new
+  end
 
-  # def create
-  #   @topic = Topic.new(topic_params)
+  def create
+    @note = Topic.new(topic_params)
 
-  #   if @topic.save
-  #     render "create.json.jbuilder", status: :created
+    if @note.save
+      # using jbuilder views
+      render "create.json.jbuilder", status: :created
+    else
+      render json: { errors: @note.errors.full_messages },
+             status: :unprocessable_entity
+    end
 
-  #     AdminTopic.create({
-  #       :admin_id => params[:admin_id],
-  #       :topic_id => @topic.id
-  #     })
-
-  #   else
-  #     render json: { errors: @topic.errors.full_messages },
-  #            status: :unprocessable_entity
-  #   end
-
-  # end
+  end
 
   # def destroy
   #   @topic.destroy
@@ -45,13 +40,13 @@ class NotesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    # def set_topic
-    #   @topic = Topic.find(params[:id])
-    # end
+    def set_note
+      @note = Note.find(params[:id])
+    end
 
     # # Never trust parameters from the scary internet, only allow the white list through.
-    # def topic_params
-    #   params.require(:topic).permit!
-    # end
+    def note_params
+      params.require(:note).permit!
+    end
 
 end
