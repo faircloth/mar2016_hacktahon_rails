@@ -20,4 +20,4 @@ production:
   <<: *default
   database: mar16_hackathon_production
   username: mar16_hackathon
-  password: <%= ENV['MAR16_HACKATHON_DATABASE_PASSWORD'] %>
+  # password: <%= ENV['MAR16_HACKATHON_DATABASE_PASSWORD'] %>
